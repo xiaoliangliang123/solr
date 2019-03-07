@@ -5,8 +5,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +18,9 @@ import java.util.List;
 @RequestMapping("/")
 public class IndexController {
 
+
+    @Value("${solr.instance.url}")
+    private String solrInstanceUrl ;
 
     @RequestMapping("/")
     public ModelAndView index(){
@@ -31,8 +34,8 @@ public class IndexController {
     @RequestMapping("/serch")
     public ModelAndView serch(String keyword,String fileds[]) throws IOException, SolrServerException {
 
-        String url = "http://localhost:8080/solr/new_core";
-        HttpSolrClient client = new HttpSolrClient.Builder(url).build();
+
+        HttpSolrClient client = new HttpSolrClient.Builder(solrInstanceUrl).build();
         // 创建SolrQuery
         SolrQuery query = new SolrQuery();
         // 输入查询条件
