@@ -6,8 +6,9 @@
 </head>
 <body style="text-align: center">
 <div>
-    查询结果总数:${count}
+    查询结果总数:${count}|耗时:${useTime}ms
 </div>
+<hr>
 <#if smlist??>
 <#list smlist as sm>
 <div>

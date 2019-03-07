@@ -37,10 +37,15 @@ public class IndexController {
         SolrQuery query = new SolrQuery();
         // 输入查询条件
         query.setQuery("username:"+keyword+"*");
+        long startTime = System.currentTimeMillis();
         // 执行查询并返回结果
         QueryResponse response = client.query(query);
+
         // 获取匹配的所有结果
         SolrDocumentList list = response.getResults();
+        long endTime = System.currentTimeMillis();
+
+        long useTime = endTime - startTime;
         // 匹配结果总数
         long count = list.getNumFound();
         List<SerchModel> smlist = SerchModel.build(list,count);
@@ -50,6 +55,7 @@ public class IndexController {
         modelAndView.setViewName("result");
         modelAndView.addObject("smlist",smlist);
         modelAndView.addObject("count",count);
+        modelAndView.addObject("useTime",useTime);
         return modelAndView;
     }
 }
