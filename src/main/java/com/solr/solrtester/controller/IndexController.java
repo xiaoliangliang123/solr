@@ -29,14 +29,16 @@ public class IndexController {
 
 
     @RequestMapping("/serch")
-    public ModelAndView serch(String keyword) throws IOException, SolrServerException {
+    public ModelAndView serch(String keyword,String fileds[]) throws IOException, SolrServerException {
 
         String url = "http://localhost:8080/solr/new_core";
         HttpSolrClient client = new HttpSolrClient.Builder(url).build();
         // 创建SolrQuery
         SolrQuery query = new SolrQuery();
         // 输入查询条件
-        query.setQuery("username:"+keyword+"*");
+        String queryString =  SerchModel.queryString(fileds,keyword);
+        query.setQuery(queryString);
+
         long startTime = System.currentTimeMillis();
         // 执行查询并返回结果
         QueryResponse response = client.query(query);

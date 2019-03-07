@@ -20,6 +20,16 @@ public class SerchModel  extends  Result{
         this.password = password;
     }
 
+    public static String queryString(String[] fileds, String keyword) {
+        if(fileds == null){
+            return  "*:*";
+        }
+        String qs = " ";
+        for(String filed :fileds){
+           qs = qs + filed +":*"+ keyword+"* or ";
+        }
+        return qs;
+    }
 
 
     public String getUsername() {
